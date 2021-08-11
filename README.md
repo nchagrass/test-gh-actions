@@ -1,2 +1,2 @@
-# test-gh-actions
-temporary repo to test gh actions
+# hello-argo
+A sample application to test ArgoCD

@@ -1,0 +1,44 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: *
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: debug dump
+      env:
+        GITHUB_CONTEXT: ${{ toJSON(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
+    - name: read labels
+      env:
+        GITHUB_EVENT: ${{ toJSON(github.event) }}
+      run: echo "$GITHUB_EVENT"
+
+#    - name: Set up Go
+#      uses: actions/setup-go@v2
+#      with:
+#        go-version: 1.16
+#
+#    - name: Build
+#      run: go build -v ./...
+#
+#    - name: Test
+#      run: go test -v ./...
+
+#    - name: Post Docker push - repo dispatch
+#      uses: peter-evans/repository-dispatch@v1
+#      with:
+#        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+#        repository: tgmendes/argo-config
+#        event-type: create-pull-request
+#        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+#
