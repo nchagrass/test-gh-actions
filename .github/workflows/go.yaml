@@ -1,0 +1,47 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: ["*"]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: read labels
+      env:
+        GITHUB_LABELS: ${{ toJSON(github.event.pull_request.labels) }}
+      run: echo "$GITHUB_LABELS"
+
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: tgmendes/argo-config
+        event-type: trigger_deployment
+        client-payload: '{"labels": ${{ toJSON(github.event.pull_request.labels) }}}'
+
+#    - name: Set up Go
+#      uses: actions/setup-go@v2
+#      with:
+#        go-version: 1.16
+#
+#    - name: Build
+#      run: go build -v ./...
+#
+#    - name: Test
+#      run: go test -v ./...
+
+#    - name: Post Docker push - repo dispatch
+#      uses: peter-evans/repository-dispatch@v1
+#      with:
+#        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+#        repository: tgmendes/argo-config
+#        event-type: create-pull-request
+#        client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
+#
