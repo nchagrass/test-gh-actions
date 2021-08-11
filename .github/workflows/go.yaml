@@ -13,14 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: debug dump
-      env:
-        GITHUB_CONTEXT: ${{ toJSON(github) }}
-      run: echo "$GITHUB_CONTEXT"
-
     - name: read labels
       env:
-        GITHUB_EVENT: ${{ toJSON(github.event) }}
+        GITHUB_LABELS: ${{ toJSON(github.event.pull_request_labels) }}
       run: echo "$GITHUB_EVENT"
 
 #    - name: Set up Go
