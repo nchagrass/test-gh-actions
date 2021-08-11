@@ -18,6 +18,14 @@ jobs:
         GITHUB_LABELS: ${{ toJSON(github.event.pull_request.labels) }}
       run: echo "$GITHUB_LABELS"
 
+    - name: Repository Dispatch
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{ secrets.REPO_ACCESS_TOKEN }}
+        repository: tgmendes/argo-config
+        event-type: create-pull-request
+        client-payload: ${{ toJSON(github.event.pull_request.labels) }}
+
 #    - name: Set up Go
 #      uses: actions/setup-go@v2
 #      with:
