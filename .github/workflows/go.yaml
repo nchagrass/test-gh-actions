@@ -16,7 +16,7 @@ jobs:
     - name: read labels
       env:
         GITHUB_LABELS: ${{ toJSON(github.event.pull_request_labels) }}
-      run: echo "$GITHUB_EVENT"
+      run: echo "$GITHUB_LABELS"
 
 #    - name: Set up Go
 #      uses: actions/setup-go@v2
